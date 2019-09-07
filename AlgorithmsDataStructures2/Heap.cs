@@ -17,9 +17,10 @@ namespace AlgorithmsDataStructures2
                 HeapArray = new int[2 << depth - 1];
                 Array.Sort(a);
                 Array.Reverse(a);
-                HeapArray = a;                          // Внедрить элементы из заданного в кучу
-                //AddChild(CutArray(a, false), 1);
-                //AddChild(CutArray(a, true), 2);
+                HeapArray = a;
+
+                for (int i = 0; i < a.Length; i++)
+                    HeapArray[i] = a[i];
             } 
             // создаём массив кучи HeapArray из заданного
             // размер массива выбираем на основе глубины depth
@@ -29,26 +30,29 @@ namespace AlgorithmsDataStructures2
         public int GetMax()
         {
             int index = 0;
-            if (HeapArray != null || HeapArray[index] != 0)
+            if (HeapArray[index] != 0)
             {
-                int prevMax = HeapArray[index];
+                int prevMax = HeapArray[0];
+                index = LastValueIndex();
+                HeapArray[0] = HeapArray[index];
                 HeapArray[index] = 0;
-                while (index < HeapArray.Length)
+                index = 0;
+
+                while (index * 2 + 1 < HeapArray.Length && (HeapArray[index] < HeapArray[index * 2 + 1] || HeapArray[index] < HeapArray[index * 2 + 2]))
                 {
                     if (HeapArray[index * 2 + 1] >= HeapArray[index * 2 + 2])
                     {
-                        HeapArray[index] = HeapArray[index * 2 + 1];
-                        HeapArray[index * 2 + 1] -= HeapArray[index];
+                        ExchangeHeapValues(index, index * 2 + 1);
                         index = index * 2 + 1;
                     }
                     else if (HeapArray[index * 2 + 1] < HeapArray[index * 2 + 2])
                     {
-                        HeapArray[index] = HeapArray[index * 2 + 2];
-                        HeapArray[index * 2 + 2] -= HeapArray[index];
+                        ExchangeHeapValues(index, index * 2 + 2);
                         index = index * 2 + 2;
                     }
-                    if (index > HeapArray.Length) return prevMax;
+                    else break;
                 }
+                return prevMax;
             }
             
             // вернуть значение корня и перестроить кучу
@@ -58,33 +62,39 @@ namespace AlgorithmsDataStructures2
         public bool Add(int key)
         {
             // добавляем новый элемент key в кучу и перестраиваем её
-            int index = 0;
-            while (index < HeapArray.Length)
+            int index = FirstEmptyIndex();
+            if (index != -1)
             {
-                if (HeapArray[index] == 0)
-                {
-                    HeapArray[index] = 0;
-                    ExchangeParentKey(index);
-                    return true;
-                }
-                else index++;
+                HeapArray[index] = key;
+                ExchangeParentKey(index);
+                return true;
             }
-            
             return false; // если куча вся заполнена
         }
 
-        // Добавляет из заданного массива элементы по индексу в имеющуюся кучу
-        // 
-        // !! Исправить либо Удалить метод. Не обрезать заданный массив. !!
+        // Находит индекс ячейки кучи имеющая значение больше 0 и возвращает его.
         //
-        public void AddChild(int[] a, int index)
+        // Если в куче такого значения не было найдено, то возвращает -1.
+        //
+        private int LastValueIndex()
         {
-            HeapArray[index] = a[a.Length];
-            AddChild(CutArray(a, false), index * 2 + 1);
-            AddChild(CutArray(a, true), index * 2 + 2);
+            int index = HeapArray.Length - 1;
+            for (; index > -1 && HeapArray[index] == 0; index--) {}
+            return index;
         }
 
-
+        // Находит первый индекс ячейки кучи имеющая значение равное 0 и возвращает его.
+        //
+        // Если в куче такого значения не было найдено, то возвращает -1.
+        //
+        private int FirstEmptyIndex()
+        {
+            int index = 0;
+            for (; index < HeapArray.Length && HeapArray[index] != 0; index++) { }
+            if (index >= HeapArray.Length) return -1;
+            return index;
+        }
+        
         // Обрезает заданный массив оставляя указанную "половинную" часть, 
         //    избавляясь от середины (Одного элемента) и второй оставшейся части. 
         //      (Если элементов 7, то остается 3)
@@ -100,7 +110,16 @@ namespace AlgorithmsDataStructures2
             return b;
         }
 
-        // Меняет местами элемент с большим ключом с элементом с меньшим ключом.
+        // Меняет местами элементы в ячейках по указанным индексам
+        //
+        private void ExchangeHeapValues(int a, int b)
+        {
+            HeapArray[a] += HeapArray[b];
+            HeapArray[b] = HeapArray[a] - HeapArray[b];
+            HeapArray[a] -= HeapArray[b];
+        }
+
+        // Меняет местами элемент с бОльшим ключом с элементом с меньшим ключом.
         // (П.С: Я использовал три буквы С случайно, а не потому что мой ник содержит SSS)
         //
         // Из кучи по заданному индексу определяется потомок и вычисляется его родитель с которым обменивается ключами
@@ -111,8 +130,9 @@ namespace AlgorithmsDataStructures2
             if (index == 0) return;
             if (HeapArray[(index-1)/2] < HeapArray[index])
             {
-                HeapArray[(index - 1) / 2] += HeapArray[index];
-                HeapArray[index] = HeapArray[index] - HeapArray[(index - 1) / 2];
+                HeapArray[index] += HeapArray[(index - 1) / 2];
+                HeapArray[(index - 1) / 2] = HeapArray[index] - HeapArray[(index - 1) / 2];
+                HeapArray[index] -= HeapArray[(index - 1) / 2];
                 ExchangeParentKey((index - 1) / 2);
             }
         }

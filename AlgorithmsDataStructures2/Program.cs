@@ -10,9 +10,11 @@ namespace AlgorithmsDataStructures2
     {
         public static void Main(string[] args)
         {
-            int[] a = new int[] { 4, 17, 5};
+            int[] a = new int[] { 4, 17, 5, 0, 0};
             Array.Sort(a);
             Array.Reverse(a);
+
+            int o = a[Array.IndexOf(a, 2) - 1];
         }
     }
 }
