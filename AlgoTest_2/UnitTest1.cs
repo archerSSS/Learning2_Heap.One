@@ -138,5 +138,16 @@ namespace AlgoTest_2
             for (int i = 0; i < heap.HeapArray.Length; i++)
                 Assert.IsTrue(heap.HeapArray[i] == 21 || heap.HeapArray[i] == 8 || heap.HeapArray[i] == 13);
         }
+
+
+        [TestMethod]
+        public void TestHeap_1()
+        {
+            Heap heap = new Heap();
+            int[] array = null;
+            heap.MakeHeap(array, 3);
+            for (int i = 0; i < heap.HeapArray.Length; i++)
+                Assert.IsTrue(heap.HeapArray[i] == 0);
+        }
     }
 }
