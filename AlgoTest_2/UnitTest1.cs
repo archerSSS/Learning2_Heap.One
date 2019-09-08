@@ -108,7 +108,7 @@ namespace AlgoTest_2
         public void TestAdd_4()
         {
             Heap heap = new Heap();
-            int[] array = new int[] { 0, 0, 0 };
+            int[] array = new int[] { 0 };
             heap.MakeHeap(array, 2);
 
             int zeros = 0;

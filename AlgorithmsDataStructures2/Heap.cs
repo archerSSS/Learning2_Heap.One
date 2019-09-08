@@ -14,10 +14,9 @@ namespace AlgorithmsDataStructures2
         {
             if (depth > 0)
             {
-                HeapArray = new int[2 << depth - 1];
+                HeapArray = new int[(2 << (depth - 1)) - 1];
                 Array.Sort(a);
                 Array.Reverse(a);
-                HeapArray = a;
 
                 for (int i = 0; i < a.Length; i++)
                     HeapArray[i] = a[i];
