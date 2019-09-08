@@ -17,11 +17,8 @@ namespace AlgorithmsDataStructures2
                 HeapArray = new int[(2 << depth) - 1];
                 if (a != null)
                 {
-                    Array.Sort(a);
-                    Array.Reverse(a);
-
                     for (int i = 0; i < a.Length; i++)
-                        HeapArray[i] = a[i];
+                        Add(a[i]);
                 }
             } 
             // создаём массив кучи HeapArray из заданного

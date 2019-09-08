@@ -109,7 +109,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 0 };
-            heap.MakeHeap(array, 2);
+            heap.MakeHeap(array, 1);
 
             int zeros = 0;
             for (int i = 0; i < heap.HeapArray.Length; i++)
