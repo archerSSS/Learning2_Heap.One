@@ -12,9 +12,9 @@ namespace AlgorithmsDataStructures2
 
         public void MakeHeap(int[] a, int depth)
         {
-            if (depth > 0)
+            if (depth > -1)
             {
-                HeapArray = new int[(2 << (depth - 1)) - 1];
+                HeapArray = new int[(2 << depth) - 1];
                 if (a != null)
                 {
                     Array.Sort(a);
@@ -32,7 +32,7 @@ namespace AlgorithmsDataStructures2
         public int GetMax()
         {
             int index = 0;
-            if (HeapArray[index] != 0)
+            if (HeapArray != null && HeapArray[index] != 0)
             {
                 int prevMax = HeapArray[0];
                 index = LastValueIndex();
@@ -64,6 +64,7 @@ namespace AlgorithmsDataStructures2
         public bool Add(int key)
         {
             // добавляем новый элемент key в кучу и перестраиваем её
+            if (HeapArray == null) return false;
             int index = FirstEmptyIndex();
             if (index != -1)
             {
@@ -95,21 +96,6 @@ namespace AlgorithmsDataStructures2
             for (; index < HeapArray.Length && HeapArray[index] != 0; index++) { }
             if (index >= HeapArray.Length) return -1;
             return index;
-        }
-        
-        // Обрезает заданный массив оставляя указанную "половинную" часть, 
-        //    избавляясь от середины (Одного элемента) и второй оставшейся части. 
-        //      (Если элементов 7, то остается 3)
-        //  Возвращает обрезанную часть в виду нового массива (заданный не меняет)
-        //
-        // Предполагается что элементов должно быть нечетное количество -- для корректной работы.
-        //
-        private int[] CutArray(int[] a, bool rightHalf)
-        {
-            int[] b = new int[a.Length / 2];
-            if (rightHalf) Array.Copy(a, a.Length / 2 + 1, b, 0, b.Length);
-            else Array.Copy(a, 0, b, 0, b.Length);
-            return b;
         }
 
         // Меняет местами элементы в ячейках по указанным индексам

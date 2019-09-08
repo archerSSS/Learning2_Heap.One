@@ -12,7 +12,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 5, 12, 9, 3, 2, 1, 55 };
-            heap.MakeHeap(array, 3);
+            heap.MakeHeap(array, 2);
             array = new int[] { 55, 12, 9, 5, 3, 2, 1 };
 
             for (int i = 0; i < heap.HeapArray.Length; i++)
@@ -24,7 +24,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 81, 29, 48 };
-            heap.MakeHeap(array, 2);
+            heap.MakeHeap(array, 1);
             array = new int[] { 81, 48, 29 };
 
             for (int i = 0; i < heap.HeapArray.Length; i++)
@@ -36,7 +36,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 17 };
-            heap.MakeHeap(array, 1);
+            heap.MakeHeap(array, 0);
 
             Assert.AreEqual(17, heap.GetMax());
             Assert.AreEqual(-1, heap.GetMax());
@@ -47,7 +47,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 17, 92, 41, 40, 82, 44, 1, 7, 95, 63, 49, 32, 9, 11, 4 };
-            heap.MakeHeap(array, 4);
+            heap.MakeHeap(array, 3);
             int[] array2 = new int[15];
             array.CopyTo(array2, 0);
             Array.Sort(array2);
@@ -62,7 +62,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 5, 12, 9, 3, 0, 0, 55 };
-            heap.MakeHeap(array, 3);
+            heap.MakeHeap(array, 2);
 
             Assert.AreEqual(true, heap.Add(4));
             Assert.AreEqual(4, heap.HeapArray[5]);
@@ -73,7 +73,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 5, 12, 9, 3, 0, 0, 55 };
-            heap.MakeHeap(array, 3);
+            heap.MakeHeap(array, 2);
 
             Assert.AreEqual(true, heap.Add(66));
             Assert.AreEqual(66, heap.HeapArray[0]);
@@ -92,7 +92,7 @@ namespace AlgoTest_2
         {
             Heap heap = new Heap();
             int[] array = new int[] { 5, 12, 9, 3, 0, 0, 55 };
-            heap.MakeHeap(array, 3);
+            heap.MakeHeap(array, 2);
 
             Assert.AreEqual(true, heap.Add(8));
             Assert.AreEqual(true, heap.Add(13));
